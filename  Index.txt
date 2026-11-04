@@ -1,0 +1,390 @@
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftForge Host - 24/7 Free Minecraft Server Hosting (Java & Bedrock)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-cube logo-icon"></i>
+            <span>CraftForge<span class="highlight">Host</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#crossplay">Crossplay</a>
+            <a href="#panel-demo" class="active-tab-link">Panel Demo</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn-outline" onclick="alert('Login modal opened!')">Login</button>
+            <button class="btn-primary" onclick="alert('Sign up modal opened!')">Sign Up Free</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i> 24/7 Always Online • Free Forever • Zero Queues
+        </div>
+        <h1>Next-Gen Minecraft Hosting for <span class="highlight">Java & Bedrock</span></h1>
+        <p>Host your own server with full support for <strong>Cracked (Offline-Mode)</strong> and <strong>Premium</strong> accounts. Play seamlessly with friends across PC, Mobile, and Consoles.</p>
+        <div class="hero-cta">
+            <a href="#panel-demo" class="btn-primary btn-large"><i class="fa-solid fa-server"></i> Create Server Now</a>
+            <a href="#features" class="btn-outline btn-large"><i class="fa-solid fa-circle-info"></i> Learn More</a>
+        </div>
+    </section>
+
+    <!-- Interactive Pterodactyl Control Panel Simulator -->
+    <section id="panel-demo" class="panel-section">
+        <div class="section-title">
+            <h2>Live Control Panel Simulator</h2>
+            <p>Experience our lightning-fast management dashboard. Fully interactive below!</p>
+        </div>
+
+        <div class="panel-container">
+            <!-- Sidebar Navigation inside Panel -->
+            <div class="panel-sidebar">
+                <div class="sidebar-server-info">
+                    <span class="server-status-dot online"></span>
+                    <div>
+                        <strong>my-survival-world</strong>
+                        <small>Node-US-East-01</small>
+                    </div>
+                </div>
+                <ul class="panel-menu">
+                    <li class="active" onclick="switchTab(event, 'tab-server')"><i class="fa-solid fa-gauge-high"></i> Server</li>
+                    <li onclick="switchTab(event, 'tab-console')"><i class="fa-solid fa-terminal"></i> Console</li>
+                    <li onclick="switchTab(event, 'tab-options')"><i class="fa-solid fa-gear"></i> Options / Settings</li>
+                    <li onclick="switchTab(event, 'tab-software')"><i class="fa-solid fa-cubes"></i> Software</li>
+                    <li onclick="switchTab(event, 'tab-files')"><i class="fa-solid fa-folder-open"></i> Files</li>
+                    <li onclick="switchTab(event, 'tab-plugins')"><i class="fa-solid fa-puzzle-piece"></i> Plugins</li>
+                </ul>
+            </div>
+
+            <!-- Panel Main Content Area -->
+            <div class="panel-content">
+                
+                <!-- TAB 1: SERVER HOME -->
+                <div id="tab-server" class="panel-tab-content active">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-server"></i> Server Overview</h3>
+                        <div class="power-buttons">
+                            <button class="btn-power start" onclick="toggleServerState('start')"><i class="fa-solid fa-play"></i> Start</button>
+                            <button class="btn-power restart" onclick="toggleServerState('restart')"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+                            <button class="btn-power stop" onclick="toggleServerState('stop')"><i class="fa-solid fa-stop"></i> Stop</button>
+                        </div>
+                    </div>
+
+                    <div class="server-status-card">
+                        <div class="status-indicator-row">
+                            <span id="serverStatusBadge" class="badge-online"><i class="fa-solid fa-circle"></i> Online (24/7 Uptime)</span>
+                            <span class="uptime-clock">Uptime: 14 days, 6 hours</span>
+                        </div>
+                        <div class="address-box">
+                            <div>
+                                <label>Server Address (Java & Bedrock Crossplay)</label>
+                                <input type="text" readonly value="my-survival.craftforge.host:25565" id="serverAddressInput">
+                            </div>
+                            <button class="btn-copy" onclick="copyAddress()"><i class="fa-regular fa-copy"></i> Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <i class="fa-solid fa-microchip"></i>
+                            <div>
+                                <small>CPU Usage</small>
+                                <h4>14.2% <span class="sub">/ 200%</span></h4>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fa-solid fa-memory"></i>
+                            <div>
+                                <small>RAM Allocated</small>
+                                <h4>3.1 GB <span class="sub">/ 6 GB</span></h4>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fa-solid fa-hard-drive"></i>
+                            <div>
+                                <small>Disk Space</small>
+                                <h4>4.8 GB <span class="sub">/ 50 GB</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: CONSOLE -->
+                <div id="tab-console" class="panel-tab-content" style="display:none;">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-terminal"></i> Live Console Output</h3>
+                        <span class="live-tag"><i class="fa-solid fa-signal"></i> Connected</span>
+                    </div>
+                    <div class="console-terminal" id="consoleTerminal">
+                        <p class="log-info">[12:00:01] [Server thread/INFO]: Starting minecraft server version 1.20.4</p>
+                        <p class="log-info">[12:00:02] [Server thread/INFO]: Loading properties</p>
+                        <p class="log-info">[12:00:03] [Geyser-Vanilla/INFO]: Geyser version 2.2.0-SNAPSHOT is starting...</p>
+                        <p class="log-success">[12:00:05] [Server thread/INFO]: Done (4.215s)! For help, type "help"</p>
+                        <p class="log-player">[12:05:22] [User Authenticator #1/INFO]: UUID of player Alex_Cracked is a7f8-4b9c...</p>
+                        <p class="log-chat">&lt;Alex_Cracked&gt; Hello everyone! Can mobile players join too?</p>
+                        <p class="log-chat">&lt;Steve_Premium&gt; Yes! GeyserMC is active, I'm playing on my iPad right now!</p>
+                    </div>
+                    <div class="console-input-bar">
+                        <span class="prompt-symbol">&gt;</span>
+                        <input type="text" id="consoleCommandInput" placeholder="Type command here (e.g., op Steve, say Hello)..." onkeypress="handleConsoleCommand(event)">
+                        <button onclick="sendConsoleCommand()">Send</button>
+                    </div>
+                </div>
+
+                <!-- TAB 3: OPTIONS / SETTINGS -->
+                <div id="tab-options" class="panel-tab-content" style="display:none;">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-gear"></i> Server Configuration & Cracked Mode</h3>
+                    </div>
+                    <div class="settings-form">
+                        <div class="setting-item highlight-box">
+                            <div>
+                                <strong>Cracked Accounts (Offline Mode)</strong>
+                                <p>Allow players using TLauncher or non-premium launchers to join your server.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked id="onlineModeToggle" onchange="toggleOnlineMode()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div>
+                                <strong>Bedrock Crossplay (GeyserMC)</strong>
+                                <p>Allow mobile, console, and Windows 10/11 Bedrock edition players to join.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div>
+                                <strong>Server Difficulty</strong>
+                                <p>Select in-game difficulty level.</p>
+                            </div>
+                            <select class="select-box">
+                                <option>Peaceful</option>
+                                <option>Easy</option>
+                                <option selected>Normal</option>
+                                <option>Hard</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div>
+                                <strong>Max Players</strong>
+                                <p>Maximum concurrent players allowed online.</p>
+                            </div>
+                            <input type="number" value="20" class="input-number">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: SOFTWARE -->
+                <div id="tab-software" class="panel-tab-content" style="display:none;">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-cubes"></i> Software & Version Installer</h3>
+                    </div>
+                    <p class="section-desc">Switch between Vanilla, Paper, Forge, Fabric, or Bedrock with a single click without losing your world data.</p>
+                    <div class="software-grid">
+                        <div class="software-card active-software">
+                            <i class="fa-solid fa-cube"></i>
+                            <h4>Paper / Spigot</h4>
+                            <p>High performance for plugins.</p>
+                            <span class="badge-installed">Installed (1.20.4)</span>
+                        </div>
+                        <div class="software-card">
+                            <i class="fa-solid fa-server"></i>
+                            <h4>Vanilla</h4>
+                            <p>Pure Minecraft experience.</p>
+                            <button class="btn-sm">Install</button>
+                        </div>
+                        <div class="software-card">
+                            <i class="fa-solid fa-hammer"></i>
+                            <h4>Forge / Fabric</h4>
+                            <p>Modded gameplay support.</p>
+                            <button class="btn-sm">Install</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: FILES -->
+                <div id="tab-files" class="panel-tab-content" style="display:none;">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-folder-open"></i> File Manager</h3>
+                        <button class="btn-primary" onclick="alert('New file created!')"><i class="fa-solid fa-plus"></i> New File</button>
+                    </div>
+                    <div class="file-list">
+                        <div class="file-row"><i class="fa-solid fa-folder"></i> <span>world/</span> <small>Folder • 2.4 GB</small></div>
+                        <div class="file-row"><i class="fa-solid fa-folder"></i> <span>plugins/</span> <small>Folder • 45 MB</small></div>
+                        <div class="file-row" onclick="alert('Opening server.properties editor...')"><i class="fa-solid fa-file-lines"></i> <span>server.properties</span> <small>File • 1.2 KB</small></div>
+                        <div class="file-row"><i class="fa-solid fa-file-lines"></i> <span>ops.json</span> <small>File • 210 bytes</small></div>
+                        <div class="file-row"><i class="fa-solid fa-file-lines"></i> <span>whitelist.json</span> <small>File • 140 bytes</small></div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: PLUGINS -->
+                <div id="tab-plugins" class="panel-tab-content" style="display:none;">
+                    <div class="panel-header-bar">
+                        <h3><i class="fa-solid fa-puzzle-piece"></i> Plugin Marketplace</h3>
+                        <input type="text" placeholder="Search plugins..." class="search-input">
+                    </div>
+                    <div class="plugin-grid">
+                        <div class="plugin-card">
+                            <div>
+                                <h4>WorldEdit</h4>
+                                <p>In-game world editing tool.</p>
+                            </div>
+                            <button class="btn-sm installed" disabled>Installed</button>
+                        </div>
+                        <div class="plugin-card">
+                            <div>
+                                <h4>EssentialsX</h4>
+                                <p>Essential server commands & economy.</p>
+                            </div>
+                            <button class="btn-sm" onclick="this.innerText='Installed'; this.classList.add('installed');">Install</button>
+                        </div>
+                        <div class="plugin-card">
+                            <div>
+                                <h4>LuckPerms</h4>
+                                <p>Advanced permissions management.</p>
+                            </div>
+                            <button class="btn-sm" onclick="this.innerText='Installed'; this.classList.add('installed');">Install</button>
+                        </div>
+                        <div class="plugin-card">
+                            <div>
+                                <h4>GeyserMC</h4>
+                                <p>Bedrock crossplay connector.</p>
+                            </div>
+                            <button class="btn-sm installed" disabled>Installed</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-title">
+            <h2>Why Choose CraftForge Host?</h2>
+            <p>Built by gamers, for gamers. Everything you need for the ultimate Minecraft server.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-box">
+                <i class="fa-solid fa-clock"></i>
+                <h3>24/7 Always Online</h3>
+                <p>Your server never sleeps or shuts down due to inactivity. Access it around the clock with zero wait queues.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-users"></i>
+                <h3>Cracked & Premium Together</h3>
+                <p>Toggle offline mode instantly so players using TLauncher or official accounts can play on the exact same world.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <h3>Java & Bedrock Crossplay</h3>
+                <p>PC Java players and Mobile/Console Bedrock players join via the exact same server IP address effortlessly.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Advanced DDoS Protection</h3>
+                <p>Enterprise-grade mitigation keeps your server online and lag-free during high player traffic.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 CraftForge Host. All rights reserved. Not an official Minecraft product.</p>
+    </footer>
+
+    <!-- JavaScript Controller -->
+    <script>
+        function switchTab(evt, tabId) {
+            let contents = document.querySelectorAll('.panel-tab-content');
+            contents.forEach(c => c.style.display = 'none');
+
+            let items = document.querySelectorAll('.panel-menu li');
+            items.forEach(i => i.classList.remove('active'));
+
+            document.getElementById(tabId).style.display = 'block';
+            evt.currentTarget.classList.add('active');
+        }
+
+        function copyAddress() {
+            let copyText = document.getElementById("serverAddressInput");
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Server address copied to clipboard!");
+        }
+
+        function toggleServerState(state) {
+            let badge = document.getElementById("serverStatusBadge");
+            if(state === 'start') {
+                badge.className = "badge-online";
+                badge.innerHTML = '<i class="fa-solid fa-circle"></i> Online (24/7 Uptime)';
+                appendConsoleLog("[Server thread/INFO]: Server started successfully!", "success");
+            } else if(state === 'stop') {
+                badge.className = "badge-offline";
+                badge.innerHTML = '<i class="fa-solid fa-circle"></i> Offline';
+                appendConsoleLog("[Server thread/INFO]: Stopping server...", "error");
+            } else if(state === 'restart') {
+                badge.className = "badge-online";
+                badge.innerHTML = '<i class="fa-solid fa-circle"></i> Restarting...';
+                appendConsoleLog("[Server thread/INFO]: Restarting server instances...", "info");
+            }
+        }
+
+        function appendConsoleLog(text, type) {
+            let term = document.getElementById("consoleTerminal");
+            let p = document.createElement("p");
+            p.className = type === 'success' ? 'log-success' : type === 'error' ? 'log-error' : 'log-info';
+            p.innerText = text;
+            term.appendChild(p);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function handleConsoleCommand(e) {
+            if(e.key === 'Enter') {
+                sendConsoleCommand();
+            }
+        }
+
+        function sendConsoleCommand() {
+            let input = document.getElementById("consoleCommandInput");
+            if(input.value.trim() !== "") {
+                appendConsoleLog("> " + input.value, "chat");
+                if(input.value.startsWith("say ")) {
+                    appendConsoleLog("[Server] " + input.value.substring(4), "chat");
+                } else {
+                    appendConsoleLog("[Server thread/INFO]: Executed command: " + input.value, "info");
+                }
+                input.value = "";
+            }
+        }
+
+        function toggleOnlineMode() {
+            let toggle = document.getElementById("onlineModeToggle");
+            if(toggle.checked) {
+                alert("Cracked (Offline Mode) Enabled! TLauncher & non-premium players can now join.");
+            } else {
+                alert("Cracked Mode Disabled! Only official premium Mojang/Microsoft accounts can join.");
+            }
+        }
+    </script>
+</body>
+</html>
